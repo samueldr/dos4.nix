@@ -6,12 +6,21 @@ set -u
 # Assuming source is at the default `C:\src` location.
 # Otherwise needs adjustments.
 
+DISK="dos.img"
+
+dd bs=512 count=2880 if=/dev/zero of="$DISK"
+# We need to trick dosbox into setting-up the floppy under A:
+# It needs a valid filesystem
+# The floppy will be formatted again later...
+mkfs.vfat "$DISK"
+
 cat > dosbox.conf <<EOF
 [cpu]
 core = dynamic
 cycles = max
 
 [autoexec]
+imgmount -t floppy a $DISK
 mount C ./
 C:
 cd src
@@ -19,15 +28,35 @@ REM setenv
 REM For some reason running a batch file stops the batch file?
 $(cat src/setenv.bat)
 nmake >> ..\\log.txt
+
+echo Faking a system drive...
+copy c:\\src\\bios\\io.sys C:\\
+copy c:\\src\\dos\\msdos.sys C:\\
+copy c:\\src\\cmd\\command\\command.com C:\\
+
+ver set 4 0
+
 cpy ..\\out
-exit
+REM exit
 EOF
 
 # Same issue :/
-echo "exit" >> src/cpy.bat
+cat >> src/cpy.bat <<EOF
+echo uuuugh
+cd C:\\OUT
+format a: /S /SELECT /V:DOS4
+md a:\\dos4
+copy C:\\out\\*.* a:\\dos4
+copy C:\\autoexec.bat a:
+exit
+EOF
+
+cat > autoexec.bat <<EOF
+path dos4
+EOF
 
 mkdir -p out
 
 PS4=" $ "
 set -x
-exec dosbox -conf dosbox.conf "$@"
+exec dosbox-x -conf dosbox.conf "$@"

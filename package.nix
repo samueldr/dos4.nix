@@ -1,6 +1,7 @@
 { runCommand
-, dosbox
+, dosbox-x
 , fetchFromGitHub
+, dosfstools
 }:
 
 runCommand "dos-4.01" {
@@ -13,7 +14,8 @@ runCommand "dos-4.01" {
   };
   #builtins.fetchGit ./dos400;
   nativeBuildInputs = [
-    dosbox
+    dosbox-x
+    dosfstools
   ];
 } ''
 (
@@ -23,7 +25,9 @@ cp -vr --no-preserve=mode "$src" src
 echo "--- log start ---" > log.txt
 tail --quiet -F log.txt &
 bash ${./build.sh}
-mv out $out
+mkdir -p $out/
+mv out $out/dos4
 mv log.txt $out/
+mv dos.img $out/
 )
 ''
