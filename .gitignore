@@ -2,3 +2,8 @@ out
 dosbox.conf
 src
 result
+*.SYS
+*.COM
+*.bat
+*.img
+LOG.TXT
