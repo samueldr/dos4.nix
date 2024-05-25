@@ -23,35 +23,33 @@ cycles = max
 imgmount -t floppy a $DISK
 mount C ./
 C:
-cd src
-REM setenv
-REM For some reason running a batch file stops the batch file?
-$(cat src/setenv.bat)
-nmake >> ..\\log.txt
-
-echo Faking a system drive...
-copy c:\\src\\bios\\io.sys C:\\
-copy c:\\src\\dos\\msdos.sys C:\\
-copy c:\\src\\cmd\\command\\command.com C:\\
-
-ver set 4 0
-
-cpy ..\\out
-REM exit
+> log.txt
+build.bat
 EOF
 
-# Same issue :/
-cat >> src/cpy.bat <<EOF
-echo uuuugh
-cd C:\\OUT
-format a: /S /SELECT /V:DOS4
-copy C:\\out\\*.* a:
-copy C:\\autoexec.bat a:
+cat > build.bat <<'EOF'
+>> C:\log.txt   cd src
+>> C:\log.txt   call setenv
+>> C:\log.txt   set
+>> C:\log.txt   nmake
+>> C:\log.txt   
+>> C:\log.txt   echo Faking a system drive...
+>> C:\log.txt   copy c:\src\bios\io.sys C:\
+>> C:\log.txt   copy c:\src\dos\msdos.sys C:\
+>> C:\log.txt   copy c:\src\cmd\command\command.com C:\
+>> C:\log.txt   
+>> C:\log.txt   ver set 4 0
+>> C:\log.txt   
+>> C:\log.txt   call cpy ..\out
+>> C:\log.txt   cd C:\\OUT
+>> C:\log.txt   format a: /S /SELECT /V:DOS4
+>> C:\log.txt   copy C:\\out\\*.* a:
+>> C:\log.txt   copy C:\\autoexec.bat a:
+
 exit
 EOF
 
 unix2dos > autoexec.bat <<EOF
-path dos4
 select menu
 EOF
 
