@@ -50,8 +50,9 @@ copy C:\\autoexec.bat a:
 exit
 EOF
 
-cat > autoexec.bat <<EOF
+unix2dos > autoexec.bat <<EOF
 path dos4
+select menu
 EOF
 
 mkdir -p out

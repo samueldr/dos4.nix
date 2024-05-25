@@ -2,6 +2,7 @@
 , dosbox-x
 , fetchFromGitHub
 , dosfstools
+, dos2unix
 }:
 
 runCommand "dos-4.01" {
@@ -14,6 +15,7 @@ runCommand "dos-4.01" {
   };
   #builtins.fetchGit ./dos400;
   nativeBuildInputs = [
+    dos2unix
     dosbox-x
     dosfstools
   ];
