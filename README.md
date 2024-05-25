@@ -19,6 +19,13 @@ Technically `dosbox-x` is used, but only because `format` works better there.
  $ qemu-system-i386 -fda dos.img
 ```
 
-And you technically have a DOS4 image.
+And you have a "modernized" 4.01 `select.exe`-based installer floppy!
 
 Fun!?
+
+
+### Modernized?
+
+Main thing is it assumes a 1.44MB floppy, and reduces disk juggling by not requiring an installer disk backup.
+
+Otherwise it is morally the same output, given the equivalent inputs.
