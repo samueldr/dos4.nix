@@ -6,14 +6,12 @@
 }:
 
 runCommand "dos-4.01" {
-  # This fork is known to build.
   src = fetchFromGitHub {
-    owner = "neozeed";
+    owner = "samueldr";
     repo = "dos400";
-    rev = "ba5c741d3d634ad6ddb6bb2f3a26d20cd7f64c54";
-    hash = "sha256-lebJr/BELyV78GW8PI1d3IwW2Ve4IiH0hbwPzJ/UF/o=";
+    rev = "ceb27c8916bce871c47c076bc8f7919a2991ffe1";
+    hash = "sha256-ylpyhZCbr64zqIYJ6gxrfoeCYqJTnji/SWYDjKuVyeQ=";
   };
-  #builtins.fetchGit ./dos400;
   nativeBuildInputs = [
     dos2unix
     dosbox-x
