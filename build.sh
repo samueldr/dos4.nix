@@ -45,8 +45,7 @@ cat >> src/cpy.bat <<EOF
 echo uuuugh
 cd C:\\OUT
 format a: /S /SELECT /V:DOS4
-md a:\\dos4
-copy C:\\out\\*.* a:\\dos4
+copy C:\\out\\*.* a:
 copy C:\\autoexec.bat a:
 exit
 EOF
