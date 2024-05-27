@@ -9,8 +9,8 @@ runCommand "dos-4.01" {
   src = fetchFromGitHub {
     owner = "samueldr";
     repo = "dos400";
-    rev = "ceb27c8916bce871c47c076bc8f7919a2991ffe1";
-    hash = "sha256-ylpyhZCbr64zqIYJ6gxrfoeCYqJTnji/SWYDjKuVyeQ=";
+    rev = "bbae49c5eaa0ce51e404b447ba0a104516c326ab";
+    hash = "sha256-hs3jPUyb721kRhWWmaB/NQB5gTpkP/RshC3zHRDZ5gk=";
   };
   nativeBuildInputs = [
     dos2unix
