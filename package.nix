@@ -22,8 +22,6 @@ runCommand "dos-4.01" {
 PS4=" $ "
 set -x
 cp -vr --no-preserve=mode "$src" src
-echo "--- log start ---" > log.txt
-tail --quiet -F log.txt &
 bash ${./build.sh}
 mkdir -p $out/
 mv out $out/dos4

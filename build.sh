@@ -31,7 +31,10 @@ cat > build.bat <<'EOF'
 >> C:\log.txt   cd src
 >> C:\log.txt   call setenv
 >> C:\log.txt   set
->> C:\log.txt   nmake
+
+>> C:\log.txt nmake /x -
+
+if errorlevel 1 goto :END
 >> C:\log.txt   
 >> C:\log.txt   echo Faking a system drive...
 >> C:\log.txt   copy c:\src\bios\io.sys C:\
@@ -45,7 +48,13 @@ cat > build.bat <<'EOF'
 >> C:\log.txt   format a: /S /SELECT /V:DOS4
 >> C:\log.txt   copy C:\\out\\*.* a:
 >> C:\log.txt   copy C:\\autoexec.bat a:
-
+echo Build was successful?
+goto :OK
+:END
+@echo off
+echo There was an error while building...
+@echo on
+:OK
 exit
 EOF
 
@@ -55,6 +64,11 @@ EOF
 
 mkdir -p out
 
+echo "--- log start ---" > log.txt
+tail --quiet -F log.txt &
+
 PS4=" $ "
 set -x
-exec dosbox-x -conf dosbox.conf "$@"
+dosbox-x -conf dosbox.conf "$@"
+
+kill $(jobs -p)
